@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './components/App';
 import Login from './components/Auth/Login';
-import Register from './components/Auth/Register';
+import Registro from './components/Auth/Registro';
+
+import 'semantic-ui-css/semantic.min.css';
+
 import registerServiceWorker from './registerServiceWorker';
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
@@ -13,10 +15,10 @@ const Root = () => (
     <Switch>
       <Route exact path="/" component={App} />
       <Route path="/login" component={Login} />
-      <Route path="/register" component={Register} />
+      <Route path="/registro" component={Registro} />
     </Switch>
   </Router>
 );
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<Root />, document.getElementById('root'));
 registerServiceWorker();
