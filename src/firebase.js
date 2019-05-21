@@ -1,6 +1,6 @@
 
-import firebase from 'firabse/app';
-import "'firebase/auth";
+import firebase from 'firebase/app';
+import "firebase/auth";
 import "firebase/database";
 import "firebase/storage";
 
@@ -12,7 +12,7 @@ var firebaseConfig = {
   storageBucket: "react-chat-aps-5-sem.appspot.com",
   messagingSenderId: "340390402374",
   appId: "1:340390402374:web:0f7e5890ccb63f9f"
-};
+}; 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
