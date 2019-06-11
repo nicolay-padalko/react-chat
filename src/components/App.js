@@ -8,11 +8,17 @@ import Messages from './Messages/Messages';
 import MetaPanel from './MetaPanel/MetaPanel';
 
 const App = () => (
-  <Grid>
+  <Grid columns="equal" classname="app" style={{ background: '#eee'}}>
     <ColorPanel />
     <SidePanel />
-    <Messages />
-    <MetaPanel />
+
+    <Grid.Column style={{ marginLeft: 320 }}>
+      <Messages />
+    </Grid.Column>
+
+    <Grid.Column width={4}>
+      <MetaPanel />
+    </Grid.Column>
   </Grid>
 )
 
