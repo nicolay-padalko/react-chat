@@ -39,7 +39,7 @@ class Root extends React.Component {
   }
 }
  
-const mapstateFromProps = state => ({
+const mapStateFromProps = state => ({
   isLoading: state.user.isLoading
 });
 
