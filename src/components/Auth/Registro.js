@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 
 class Registro extends React.Component {
   state = {
-    nomeusu: '',
+    username: '',
     email: '',
     senha: '',
     confirmaSenha: '',
@@ -46,8 +46,8 @@ class Registro extends React.Component {
     }
   }
 
-  isFormVazio = ({ nomeusu, email, senha, confirmaSenha }) => {
-    return !nomeusu.length || !email.length || !senha.length || !confirmaSenha.length;
+  isFormVazio = ({ username, email, senha, confirmaSenha }) => {
+    return !username.length || !email.length || !senha.length || !confirmaSenha.length;
   }
 
   mostrarErros = errors => errors.map((error, i) => <p key={i}>{error.message}</p>);
@@ -66,7 +66,7 @@ class Registro extends React.Component {
       .then(createdUser => {
         console.log(createdUser);
         createdUser.user.updateProfile({
-          displayName: this.state.nomeusu,
+          displayName: this.state.username,
           photoURL: `http://gravatar.com/avatar${md5(createdUser.user.email)}?d=identicon`
         })
         .then(() => {
@@ -101,7 +101,7 @@ saveUser = createdUser => {
  }
 
   render() {
-    const { nomeusu, email, senha, confirmaSenha, errors, loading } = this.state;
+    const { username, email, senha, confirmaSenha, errors, loading } = this.state;
     
     return (
       <Grid textAlign="center" verticalAlign="middle" className="App">
@@ -112,8 +112,8 @@ saveUser = createdUser => {
           </Header>
           <Form onSubmit={this.handleSubmit} size="large">
             <Segment stacked>
-              <Form.Input fluid name="nomeusu" icon="user" iconPosition="left"
-              placeholder="Nome Usuario" onChange={this.handleChange} value={nomeusu} type="text" 
+              <Form.Input fluid name="username" icon="user" iconPosition="left"
+              placeholder="Nome Usuario" onChange={this.handleChange} value={username} type="text" 
               />
 
               <Form.Input fluid name="email" icon="mail" iconPosition="left"
