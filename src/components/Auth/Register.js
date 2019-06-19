@@ -8,12 +8,12 @@ import { Grid, Form, Segment, Button, Header, Message, Icon } from
 
 import { Link } from 'react-router-dom';
 
-class Registro extends React.Component {
+class Register extends React.Component {
   state = {
     username: '',
     email: '',
-    senha: '',
-    confirmaSenha: '',
+    password: '',
+    passwordConfirmation: '',
     errors: [],
     loading: false,
     usersRef: firebase.database().ref('users')
@@ -23,12 +23,12 @@ class Registro extends React.Component {
     let errors = [];
     let error;
 
-    if (this.isFormVazio(this.state)) {
+    if (this.isFormEmpty(this.state)) {
       error = { message: 'Preencha corretamente os campos' };
       this.setState({ errors: errors.concat(error) })
       return false;
-    } else if (!this.isSenhaValid(this.state)) {
-      error = { message: ' Senha Invalida '}
+    } else if (!this.ispasswordValid(this.state)) {
+      error = { message: ' password Invalida '}
       this.setState({ errors: errors.concat(error) });
       return false;
     } else {
@@ -36,18 +36,18 @@ class Registro extends React.Component {
     }
   }
 
-  isSenhaValid = ({ senha, confirmaSenha }) => {
-    if (senha.length < 6 || confirmaSenha.length < 6) {
+  ispasswordValid = ({ password, passwordConfirmation }) => {
+    if (password.length < 6 || passwordConfirmation.length < 6) {
       return false;
-    } else if (senha !== confirmaSenha) {
+    } else if (password !== passwordConfirmation) {
       return false;
     } else {
       return true;
     }
   }
 
-  isFormVazio = ({ username, email, senha, confirmaSenha }) => {
-    return !username.length || !email.length || !senha.length || !confirmaSenha.length;
+  isFormEmpty = ({ username, email, password, passwordConfirmation }) => {
+    return !username.length || !email.length || !password.length || !passwordConfirmation.length;
   }
 
   mostrarErros = errors => errors.map((error, i) => <p key={i}>{error.message}</p>);
@@ -61,28 +61,28 @@ class Registro extends React.Component {
     if (this.isFormValid()) {
       this.setState({ errors: [], loading: true });
       firebase
-      .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.senha)
-      .then(createdUser => {
-        console.log(createdUser);
-        createdUser.user.updateProfile({
-          displayName: this.state.username,
-          photoURL: `http://gravatar.com/avatar${md5(createdUser.user.email)}?d=identicon`
-        })
-        .then(() => {
-          this.saveUser(createdUser).then(() => {
-            console.log('user saved');
+        .auth()
+        .createUserWithEmailAndPassword(this.state.email, this.state.password)
+        .then(createdUser => {
+          console.log(createdUser);
+          createdUser.user.updateProfile({
+            displayName: this.state.username,
+            photoURL: `http://gravatar.com/avatar/${md5(createdUser.user.email)}?d=identicon`
           })
+          .then(() => {
+            this.saveUser(createdUser).then(() => {
+              console.log('user saved');
+            });
+          })
+          .catch(err => {
+            console.error(err);
+            this.setState({ errors: this.state.errors.concat(err), loading: false });
+          });
         })
         .catch(err => {
           console.error(err);
           this.setState({ errors: this.state.errors.concat(err), loading: false });
-        })
-      })
-      .catch(err => {
-        console.error(err);
-        this.setState({ errors: this.state.errors.concat(err), loading: false });
-      });
+        });
     }
   };
 saveUser = createdUser => {
@@ -90,7 +90,7 @@ saveUser = createdUser => {
     name: createdUser.user.displayName,
     avatar: createdUser.user.photoURL
   });
-}
+};
 
  handleInputError = (errors, inputName) => {
    return errors.some(error =>
@@ -101,7 +101,7 @@ saveUser = createdUser => {
  }
 
   render() {
-    const { username, email, senha, confirmaSenha, errors, loading } = this.state;
+    const { username, email, password, passwordConfirmation, errors, loading } = this.state;
     
     return (
       <Grid textAlign="center" verticalAlign="middle" className="App">
@@ -122,15 +122,15 @@ saveUser = createdUser => {
               type="email" 
               />
 
-              <Form.Input fluid name="senha" icon="lock" iconPosition="left"
-              placeholder="Senha" onChange={this.handleChange} value={senha} 
-              className={this.handleInputError(errors, 'senha')}
+              <Form.Input fluid name="password" icon="lock" iconPosition="left"
+              placeholder="password" onChange={this.handleChange} value={password} 
+              className={this.handleInputError(errors, 'password')}
               type="password" 
               />
 
-              <Form.Input fluid name="confirmaSenha" icon="repeat" iconPosition="left"
-              placeholder="Confirma Senha" onChange={this.handleChange} value={confirmaSenha} 
-              className={this.handleInputError(errors, 'senha')}
+              <Form.Input fluid name="passwordConfirmation" icon="repeat" iconPosition="left"
+              placeholder="Confirma password" onChange={this.handleChange} value={passwordConfirmation} 
+              className={this.handleInputError(errors, 'password')}
               type="password" 
               />
 
@@ -152,4 +152,4 @@ saveUser = createdUser => {
   }
 }
 
-export default Registro;
+export default Register;

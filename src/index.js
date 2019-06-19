@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import Login from './components/Auth/Login';
-import Registro from './components/Auth/Registro';
+import Register from './components/Auth/Register';
 import Spinner from './Spinner';
 import firebase from './firebase';
 
@@ -36,7 +36,7 @@ class Root extends React.Component {
       <Switch>
         <Route exact path="/" component={App} />
         <Route path="/login" component={Login} />
-        <Route path="/registro" component={Registro} />
+        <Route path="/register" component={Register} />
       </Switch>
     );
   }
